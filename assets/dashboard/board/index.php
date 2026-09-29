@@ -578,211 +578,236 @@ $persen_card = ($total_bayar_all > 0) ? round(($kpi_periode['total_card'] / $tot
 <script type="text/javascript" src="assets/js/js/exporting.js"></script>
 
 <script type="text/javascript">
-$(document).ready(function () {
-    // Format Number Helper
-    function formatRupiah(num) {
-        return 'Rp ' + Number(num).toLocaleString('id-ID');
+(function() {
+    function initCharts() {
+        if (typeof Highcharts === 'undefined') {
+            setTimeout(initCharts, 100);
+            return;
+        }
+
+        // Format Number Helper
+        function formatRupiah(num) {
+            return 'Rp ' + Number(num).toLocaleString('id-ID');
+        }
+
+        var renderChart = function(containerId, options) {
+            options.chart = options.chart || {};
+            options.chart.renderTo = containerId;
+            if (typeof Highcharts.chart === 'function') {
+                return Highcharts.chart(containerId, options);
+            } else if (typeof Highcharts.Chart === 'function') {
+                return new Highcharts.Chart(options);
+            } else if (typeof $.fn.highcharts !== 'undefined') {
+                return $('#' + containerId).highcharts(options);
+            }
+        };
+
+        // 1. Chart Tren Penjualan (Area / Spline Chart)
+        renderChart('chartTrenPenjualan', {
+            chart: {
+                type: 'areaspline',
+                style: {
+                    fontFamily: 'Roboto, "Helvetica Neue", Arial, sans-serif'
+                }
+            },
+            title: {
+                text: null
+            },
+            credits: {
+                enabled: false
+            },
+            xAxis: {
+                categories: <?= json_encode($chart_categories) ?>,
+                crosshair: true,
+                labels: {
+                    style: { color: '#64748b' }
+                }
+            },
+            yAxis: [{
+                title: {
+                    text: 'Total Omset (Rp)',
+                    style: { color: '#3b82f6' }
+                },
+                labels: {
+                    formatter: function () {
+                        if (this.value >= 1000000) {
+                            return 'Rp ' + (this.value / 1000000).toFixed(1) + ' Jt';
+                        } else if (this.value >= 1000) {
+                            return 'Rp ' + (this.value / 1000).toFixed(0) + ' Rb';
+                        }
+                        return 'Rp ' + this.value;
+                    },
+                    style: { color: '#64748b' }
+                }
+            }, {
+                title: {
+                    text: 'Jumlah Transaksi',
+                    style: { color: '#8b5cf6' }
+                },
+                opposite: true,
+                labels: {
+                    style: { color: '#64748b' }
+                }
+            }],
+            tooltip: {
+                shared: true,
+                formatter: function () {
+                    var s = '<b>' + this.x + '</b><br/>';
+                    $.each(this.points, function () {
+                        if (this.series.name === 'Omset Penjualan') {
+                            s += '<span style="color:' + this.series.color + '">\u25CF</span> ' + this.series.name + ': <b>' + formatRupiah(this.y) + '</b><br/>';
+                        } else {
+                            s += '<span style="color:' + this.series.color + '">\u25CF</span> ' + this.series.name + ': <b>' + this.y + ' Trx</b><br/>';
+                        }
+                    });
+                    return s;
+                }
+            },
+            plotOptions: {
+                areaspline: {
+                    fillOpacity: 0.15,
+                    lineWidth: 3,
+                    marker: {
+                        radius: 4,
+                        symbol: 'circle'
+                    }
+                }
+            },
+            series: [{
+                name: 'Omset Penjualan',
+                data: <?= json_encode($chart_series_omset) ?>,
+                color: '#3b82f6',
+                yAxis: 0
+            }, {
+                name: 'Jumlah Transaksi',
+                data: <?= json_encode($chart_series_trx) ?>,
+                type: 'spline',
+                dashStyle: 'ShortDot',
+                color: '#8b5cf6',
+                yAxis: 1
+            }]
+        });
+
+        // 2. Chart Komposisi Metode Pembayaran (Donut Chart)
+        renderChart('chartMetodeBayar', {
+            chart: {
+                type: 'pie',
+                style: {
+                    fontFamily: 'Roboto, "Helvetica Neue", Arial, sans-serif'
+                }
+            },
+            title: {
+                text: null
+            },
+            credits: {
+                enabled: false
+            },
+            tooltip: {
+                formatter: function () {
+                    return '<b>' + this.point.name + '</b><br/>Total: <b>' + formatRupiah(this.y) + '</b> (' + this.percentage.toFixed(1) + '%)';
+                }
+            },
+            plotOptions: {
+                pie: {
+                    innerSize: '55%',
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        format: '<b>{point.name}</b><br>{point.percentage:.1f}%',
+                        distance: -30,
+                        style: {
+                            fontSize: '11px',
+                            color: '#fff',
+                            textOutline: 'none'
+                        }
+                    },
+                    showInLegend: true
+                }
+            },
+            legend: {
+                align: 'center',
+                verticalAlign: 'bottom',
+                layout: 'horizontal'
+            },
+            series: [{
+                name: 'Pembayaran',
+                colorByPoint: true,
+                data: [{
+                    name: 'Tunai (Cash)',
+                    y: <?= (float)$kpi_periode['total_tunai'] ?>,
+                    color: '#10b981'
+                }, {
+                    name: 'Non-Tunai / Card',
+                    y: <?= (float)$kpi_periode['total_card'] ?>,
+                    color: '#3b82f6'
+                }]
+            }]
+        });
+
+        // 3. Chart 10 Produk Terlaris (Horizontal Bar Chart)
+        renderChart('chartTopProduk', {
+            chart: {
+                type: 'bar',
+                style: {
+                    fontFamily: 'Roboto, "Helvetica Neue", Arial, sans-serif'
+                }
+            },
+            title: {
+                text: null
+            },
+            credits: {
+                enabled: false
+            },
+            xAxis: {
+                categories: <?= json_encode($top_item_names) ?>,
+                labels: {
+                    style: { fontSize: '11px', color: '#334155' }
+                }
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Qty Terjual (Pcs)',
+                    align: 'high'
+                },
+                labels: {
+                    overflow: 'justify'
+                }
+            },
+            tooltip: {
+                formatter: function () {
+                    var idx = this.point.index;
+                    var omsets = <?= json_encode($top_item_omsets) ?>;
+                    var omset_val = (omsets && omsets[idx]) ? formatRupiah(omsets[idx]) : '-';
+                    return '<b>' + this.x + '</b><br/>Qty Terjual: <b>' + this.y + ' Pcs</b><br/>Total Omset: <b>' + omset_val + '</b>';
+                }
+            },
+            plotOptions: {
+                bar: {
+                    dataLabels: {
+                        enabled: true,
+                        format: '{point.y} pcs',
+                        style: { fontSize: '11px', fontWeight: 'bold', color: '#334155' }
+                    },
+                    borderRadius: 4
+                }
+            },
+            legend: {
+                enabled: false
+            },
+            series: [{
+                name: 'Qty Terjual',
+                data: <?= json_encode($top_item_qtys) ?>,
+                color: '#f59e0b'
+            }]
+        });
     }
 
-    // 1. Chart Tren Penjualan (Area / Spline Chart)
-    $('#chartTrenPenjualan').highcharts({
-        chart: {
-            type: 'areaspline',
-            style: {
-                fontFamily: 'Roboto, "Helvetica Neue", Arial, sans-serif'
-            }
-        },
-        title: {
-            text: null
-        },
-        credits: {
-            enabled: false
-        },
-        xAxis: {
-            categories: <?= json_encode($chart_categories) ?>,
-            crosshair: true,
-            labels: {
-                style: { color: '#64748b' }
-            }
-        },
-        yAxis: [{
-            title: {
-                text: 'Total Omset (Rp)',
-                style: { color: '#3b82f6' }
-            },
-            labels: {
-                formatter: function () {
-                    if (this.value >= 1000000) {
-                        return 'Rp ' + (this.value / 1000000).toFixed(1) + ' Jt';
-                    } else if (this.value >= 1000) {
-                        return 'Rp ' + (this.value / 1000).toFixed(0) + ' Rb';
-                    }
-                    return 'Rp ' + this.value;
-                },
-                style: { color: '#64748b' }
-            }
-        }, {
-            title: {
-                text: 'Jumlah Transaksi',
-                style: { color: '#8b5cf6' }
-            },
-            opposite: true,
-            labels: {
-                style: { color: '#64748b' }
-            }
-        }],
-        tooltip: {
-            shared: true,
-            formatter: function () {
-                var s = '<b>' + this.x + '</b><br/>';
-                $.each(this.points, function () {
-                    if (this.series.name === 'Omset Penjualan') {
-                        s += '<span style="color:' + this.series.color + '">\u25CF</span> ' + this.series.name + ': <b>' + formatRupiah(this.y) + '</b><br/>';
-                    } else {
-                        s += '<span style="color:' + this.series.color + '">\u25CF</span> ' + this.series.name + ': <b>' + this.y + ' Trx</b><br/>';
-                    }
-                });
-                return s;
-            }
-        },
-        plotOptions: {
-            areaspline: {
-                fillOpacity: 0.15,
-                lineWidth: 3,
-                marker: {
-                    radius: 4,
-                    symbol: 'circle'
-                }
-            }
-        },
-        series: [{
-            name: 'Omset Penjualan',
-            data: <?= json_encode($chart_series_omset) ?>,
-            color: '#3b82f6',
-            yAxis: 0
-        }, {
-            name: 'Jumlah Transaksi',
-            data: <?= json_encode($chart_series_trx) ?>,
-            type: 'spline',
-            dashStyle: 'ShortDot',
-            color: '#8b5cf6',
-            yAxis: 1
-        }]
-    });
-
-    // 2. Chart Komposisi Metode Pembayaran (Donut Chart)
-    $('#chartMetodeBayar').highcharts({
-        chart: {
-            type: 'pie',
-            style: {
-                fontFamily: 'Roboto, "Helvetica Neue", Arial, sans-serif'
-            }
-        },
-        title: {
-            text: null
-        },
-        credits: {
-            enabled: false
-        },
-        tooltip: {
-            formatter: function () {
-                return '<b>' + this.point.name + '</b><br/>Total: <b>' + formatRupiah(this.y) + '</b> (' + this.percentage.toFixed(1) + '%)';
-            }
-        },
-        plotOptions: {
-            pie: {
-                innerSize: '55%',
-                allowPointSelect: true,
-                cursor: 'pointer',
-                dataLabels: {
-                    enabled: true,
-                    format: '<b>{point.name}</b><br>{point.percentage:.1f}%',
-                    distance: -30,
-                    style: {
-                        fontSize: '11px',
-                        color: '#fff',
-                        textOutline: 'none'
-                    }
-                },
-                showInLegend: true
-            }
-        },
-        legend: {
-            align: 'center',
-            verticalAlign: 'bottom',
-            layout: 'horizontal'
-        },
-        series: [{
-            name: 'Pembayaran',
-            colorByPoint: true,
-            data: [{
-                name: 'Tunai (Cash)',
-                y: <?= (float)$kpi_periode['total_tunai'] ?>,
-                color: '#10b981'
-            }, {
-                name: 'Non-Tunai / Card',
-                y: <?= (float)$kpi_periode['total_card'] ?>,
-                color: '#3b82f6'
-            }]
-        }]
-    });
-
-    // 3. Chart 10 Produk Terlaris (Horizontal Bar Chart)
-    $('#chartTopProduk').highcharts({
-        chart: {
-            type: 'bar',
-            style: {
-                fontFamily: 'Roboto, "Helvetica Neue", Arial, sans-serif'
-            }
-        },
-        title: {
-            text: null
-        },
-        credits: {
-            enabled: false
-        },
-        xAxis: {
-            categories: <?= json_encode($top_item_names) ?>,
-            labels: {
-                style: { fontSize: '11px', color: '#334155' }
-            }
-        },
-        yAxis: {
-            min: 0,
-            title: {
-                text: 'Qty Terjual (Pcs)',
-                align: 'high'
-            },
-            labels: {
-                overflow: 'justify'
-            }
-        },
-        tooltip: {
-            formatter: function () {
-                var idx = this.point.index;
-                var omsets = <?= json_encode($top_item_omsets) ?>;
-                var omset_val = (omsets && omsets[idx]) ? formatRupiah(omsets[idx]) : '-';
-                return '<b>' + this.x + '</b><br/>Qty Terjual: <b>' + this.y + ' Pcs</b><br/>Total Omset: <b>' + omset_val + '</b>';
-            }
-        },
-        plotOptions: {
-            bar: {
-                dataLabels: {
-                    enabled: true,
-                    format: '{point.y} pcs',
-                    style: { fontSize: '11px', fontWeight: 'bold', color: '#334155' }
-                },
-                borderRadius: 4
-            }
-        },
-        legend: {
-            enabled: false
-        },
-        series: [{
-            name: 'Qty Terjual',
-            data: <?= json_encode($top_item_qtys) ?>,
-            color: '#f59e0b'
-        }]
-    });
-});
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initCharts);
+    } else {
+        initCharts();
+    }
+})();
 </script>
