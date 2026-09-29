@@ -2999,3 +2999,6 @@ foreach($hak_a as $hak_akses){
 $akses_menu=rtrim($haktemp,',');
 $array_akses_menu=explode(',',$akses_menu);
 
+
+
+                
