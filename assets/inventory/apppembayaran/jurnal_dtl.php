@@ -1,0 +1,76 @@
+<?php
+if($tel['jenis_pem']==1){
+				$hrgbeli=$tel['dibayar'];
+				//===============jurnal=================
+				$dttime=date("Y-m-d H:i:s");
+				$datajur = array(  'NO_JURNAL' => $idj, 
+							   'ACC_CODE' =>  $_POST['pemb'][$key],
+							   'DEBET' => $hrgbeli,
+							   'KREDIT' => "0",
+							   'USD' => "0",
+							   'KURS' => "0",
+							   'KET_DTL' => "AJ Pembayaran Piutang ".$tel['no_fj']." (Tunai)",
+							   'TGL_JURNAL' => date("Y-m-d"),
+							   'TANGGAL' => $dttime,
+							   'ID_CAB' => $_SESSION['ID_CABANG'],
+							   'NO_INVOICE' => $_POST['link'],
+							  );
+				$execjur= $db->insert("ak_jurnal_dtl", $datajur);
+				//=================jurnal lawan=============
+				$s=$db->select("m_customer","ifnull(pph,0) as pph,ifnull(account,0) as account","id_cus='$tel[id_cus]'");
+				foreach($s as $pps){}
+				
+				$datajur = array(  'NO_JURNAL' => $idj, 
+							   'ACC_CODE' => $pps['account'],
+							   'DEBET' => 0,
+							   'KREDIT' => $hrgbeli,
+							   'USD' => "0",
+							   'KURS' => "0",
+							   'KET_DTL' => "AJ Pembayaran Piutang ".$tel['no_fj']." (Tunai)",
+							   'TGL_JURNAL' => date("Y-m-d"),
+							   'TANGGAL' => $dttime,
+							   'ID_CAB' => $_SESSION['ID_CABANG'],
+							   'NO_INVOICE' => $_POST['link'],
+							  );
+				$execjur= $db->insert("ak_jurnal_dtl", $datajur);
+				//jurnal lawan
+		//==============jurnal qty terima========
+}
+if($tel['jenis_pem']==2 || $tel['jenis_pem']==3  || $tel['jenis_pem']==5){
+		if($tel['jenis_pem']==2){$ket="(Transfer)";}elseif($tel['jenis_pem']==3){$ket="(Giro)";}elseif($tel['jenis_pem']==5){$ket="(Deposit)";}
+				$hrgbeli=$tel['dibayar'];
+				//===============jurnal=================
+				$dttime=date("Y-m-d H:i:s");
+				$datajur = array(  'NO_JURNAL' => $idj, 
+							   'ACC_CODE' => $_POST['pemb'][$key],
+							   'DEBET' => $hrgbeli,
+							   'KREDIT' => "0",
+							   'USD' => "0",
+							   'KURS' => "0",
+							   'KET_DTL' => "AJ Pembayaran Piutang ".$tel['no_fj']." ".$ket."",
+							   'TGL_JURNAL' => date("Y-m-d"),
+							   'TANGGAL' => $dttime,
+							   'ID_CAB' => $_SESSION['ID_CABANG'],
+							   'NO_INVOICE' => $_POST['link'],
+							  );
+				$execjur= $db->insert("ak_jurnal_dtl", $datajur);
+				//=================jurnal lawan=============
+				$s=$db->select("m_customer","ifnull(pph,0) as pph,ifnull(account,0) as account","id_cus='$tel[id_cus]'");
+				foreach($s as $pps){}
+				$datajur = array(  'NO_JURNAL' => $idj, 
+							   'ACC_CODE' => $pps['account'],
+							   'DEBET' => 0,
+							   'KREDIT' => $hrgbeli,
+							   'USD' => "0",
+							   'KURS' => "0",
+							   'KET_DTL' => "AJ Pembayaran Piutang ".$tel['no_fj']." ".$ket."",
+							   'TGL_JURNAL' => date("Y-m-d"),
+							   'TANGGAL' => $dttime,
+							   'ID_CAB' => $_SESSION['ID_CABANG'],
+							   'NO_INVOICE' => $_POST['link'],
+							  );
+				$execjur= $db->insert("ak_jurnal_dtl", $datajur);
+				//jurnal lawan
+		//==============jurnal qty terima========
+}
+?>

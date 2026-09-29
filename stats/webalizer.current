@@ -1,0 +1,224 @@
+# Webalizer V2.23-08 Incremental Data - 05/03/2017 17:17:57
+2017 5 3 17 17 57
+947 635 1 40 9 3 20637167 235 8 0
+1 3 223 2 3
+0 0 0 0 0 0
+615 436 14075676 1 137 4
+332 199 6561491 1 98 4
+0 0 0 0 0 0
+0 0 0 0 0 0
+0 0 0 0 0 0
+0 0 0 0 0 0
+0 0 0 0 0 0
+0 0 0 0 0 0
+0 0 0 0 0 0
+0 0 0 0 0 0
+0 0 0 0 0 0
+0 0 0 0 0 0
+0 0 0 0 0 0
+0 0 0 0 0 0
+0 0 0 0 0 0
+0 0 0 0 0 0
+0 0 0 0 0 0
+0 0 0 0 0 0
+0 0 0 0 0 0
+0 0 0 0 0 0
+0 0 0 0 0 0
+0 0 0 0 0 0
+0 0 0 0 0 0
+0 0 0 0 0 0
+0 0 0 0 0 0
+0 0 0 0 0 0
+0 0 0 0 0 0
+0 0 0 0 0 0
+0 0 0 0 0 0
+0 0 0 0 0 0
+0 0 0 0
+0 0 0 0
+0 0 0 0
+0 0 0 0
+0 0 0 0
+0 0 0 0
+0 0 0 0
+0 0 0 0
+0 0 0 0
+0 0 0 0
+263 228 9685731 40
+198 138 3877218 43
+0 0 0 0
+148 85 2137620 46
+133 74 2355377 49
+56 31 718883 15
+139 73 1838391 39
+7 4 16659 2
+3 2 7288 1
+0 0 0 0
+0 0 0 0
+0 0 0 0
+0 0 0 0
+0 0 0 0
+0
+0
+0
+635
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+312
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+# -urls- 
+/assets/js/pages/datatables_basic.js
+0 5 0 12337 0 0
+/assets/js/pages/form_select2.js
+0 5 0 74285 0 0
+/assets/js/js/jquery.number.js
+0 5 0 105715 0 0
+/login2.php
+0 2 0 8484 0 0
+/assets/js/plugins/forms/selects/select2.min.js
+0 5 0 324377 0 0
+/assets/master/kode_rekening/data.php
+0 12 0 37159 0 0
+/assets/js/core/libraries/jquery_ui/interactions.min.js
+0 5 0 422088 0 0
+/logout.php
+0 5 0 1980 0 0
+/assets/js/plugins/tables/datatables/extensions/scroller.min.js
+0 5 0 55708 0 0
+/assets/js/core/libraries/bootstrap.min.js
+0 5 0 185505 0 0
+/cek_login.php
+0 6 0 2378 0 0
+/assets/images/photo.jpg
+1 5 0 9980 0 0
+/assets/master/kas_bank/data.php
+0 9 0 10584 0 0
+/favicon.ico
+0 8 0 61056 0 0
+/assets/css/extras/jquery-ui.css
+0 5 0 165741 0 0
+/assets/js/core/libraries/jquery.min.js
+0 5 0 423155 0 0
+/assets/css/minified/bootstrap.min.css
+0 5 0 612889 0 0
+/assets/css/minified/components.min.css
+0 5 0 1282020 0 0
+/assets/js/plugins/ui/nicescroll.min.js
+0 5 0 302265 0 0
+/assets/css/icons/icomoon/fonts/icomoon.woff
+0 5 0 1092960 0 0
+/assets/images/logo2.png
+1 5 0 118595 0 0
+/assets/js/js/jquery-ui.js
+0 5 0 2253848 0 0
+/assets/css/minified/colors.min.css
+0 5 0 190460 0 0
+/assets/css/icons/icomoon/styles.css
+0 5 0 238771 0 0
+/assets/akutansi/bank_keluar/datakorek1.php
+0 44 0 18776 0 0
+/assets/master/kas_bank/datakorek.php
+0 5 0 4792 0 0
+/assets/js/plugins/ui/drilldown.js
+0 5 0 72605 0 0
+/
+0 235 0 9842911 8 7
+/assets/js/core/app.js
+0 5 0 85935 0 0
+/assets/js/plugins/tables/datatables/datatables.min.js
+0 5 0 406137 0 0
+/assets/js/pages/datatables_extension_scroller.js
+0 5 0 17560 0 0
+/assets/js/plugins/loaders/blockui.min.js
+0 5 0 47555 0 0
+/cek_login2.php
+0 1 31930000 395 0 0
+/assets/js/plugins/loaders/pace.min.js
+0 5 0 63965 0 0
+/assets/images/placeholder.jpg
+1 5 0 364345 0 0
+/assets/js/core/libraries/jquery_ui/datepicker.min.js
+0 5 0 304116 0 0
+/assets/inventory/brg_masuk/mode.php
+0 1 0 223 0 0
+/assets/css/minified/core.min.css
+0 5 0 542910 0 0
+/assets/js/plugins/uploaders/fileinput.min.js
+0 5 0 109706 0 0
+/assets/akutansi/bank_keluar/datakorek.php
+0 167 0 112925 0 0
+# End Of Table - urls
+# -sites- (monthly)
+192.168.1.1
+0 947 635 20637167 8 1493831877
+/
+# End Of Table - sites (monthly)
+# -sites- (daily)
+192.168.1.1
+0 332 199 6561491 4 1493831877
+/
+# End Of Table - sites (daily)
+# -referrers- 
+http://headoffice.cloudmnm.com/assets/css/extras/jquery-ui.css
+1 293
+http://headoffice.cloudmnm.com/logout.php
+1 6
+http://headoffice.cloudmnm.com/login2.php
+1 6
+http://headoffice.cloudmnm.com/cek_login.php
+1 6
+- (Direct Request)
+0 7
+http://headoffice.cloudmnm.com/index.php
+1 482
+http://headoffice.cloudmnm.com/assets/css/icons/icomoon/styles.css
+1 5
+http://headoffice.cloudmnm.com/cek_login2.php
+1 1
+http://headoffice.cloudmnm.com/
+1 141
+# End Of Table - referrers
+# -agents- 
+Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36
+0 102
+Mozilla/5.0 (Windows NT 10.0; WOW64; rv:53.0) Gecko/20100101 Firefox/53.0
+0 70
+Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36
+0 775
+# End Of Table - agents
+# -search strings- 
+# End Of Table - search strings
+# -usernames- 
+# End Of Table - usernames

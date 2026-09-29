@@ -1,0 +1,302 @@
+<script>
+ $.extend( $.fn.dataTable.defaults, {
+        autoWidth: false,
+        columnDefs: [{ 
+            orderable: false,
+            targets: [ 7 ]
+        }],
+        dom: '<"datatable-header"fl><"datatable-scroll"t><"datatable-footer"ip>',
+        language: {
+            search: '<span>Cari Data:</span> _INPUT_',
+            lengthMenu: '<span>Show:</span> _MENU_',
+            paginate: { 'first': 'First', 'last': 'Last', 'next': '&rarr;', 'previous': '&larr;' }
+        },
+        drawCallback: function () {
+            $(this).find('tbody tr').slice(-3).find('.dropdown, .btn-group').addClass('dropup');
+        },
+        preDrawCallback: function() {
+            $(this).find('tbody tr').slice(-3).find('.dropdown, .btn-group').removeClass('dropup');
+        }
+    });
+	<?php if($_GET['cus']){?>
+	 $('#example4').DataTable( {
+			"processing": true,
+			"serverSide": true,
+			"ajax": {
+				"url": "assets/inventory/buku_hutang/data.php?cus=<?=$_GET['cus']?>",
+				"dataType": "jsonp"
+				}
+	} );
+	<?php }?>
+	function com(id){
+		
+		
+	}
+	function ambilbg(id){
+		$.get('assets/inventory/buku_hutang/ambilbg.php?id='+id, function(data) {
+			spl=data.split('_');
+			if(spl[1]==1){
+				$('#bukubg'+id).show();
+			}
+		});
+	}
+	function show(id){
+		$.get('assets/inventory/buku_hutang/bukubg.php?id='+id, function(data) {
+				$('#hahaha').html(data);    
+		});
+	}
+	
+	
+	function tambah(id){
+		$('#tambah_in').val('ijen');
+		$('#id').val(id);
+		$('#totalpiutang2').val($('#totalpiutang'+id).val());
+		$('#idcus2').val($('#idcus'+id).val());
+		$('#tempo_normal2').val($('#tempo_normal'+id).val());
+		$('#tempo_tambahan2').val($('#tempo_tambahan'+id).val());
+		if($('#idcus').val()==''){
+			alert('Data tidak lengkap');	
+		}else{
+		    javascript: document.getElementById('form_index').submit();
+		}
+	}
+	//$("#cus").load("assets/inventory/buku_tagihan/pelanggan.php");	
+	function pindahdatapel(aa){
+		window.location="index.php?x=hutang&cus="+aa;
+	}
+	function pindahjen(){
+		window.location="index.php?x=hutang&cus="+$('#cusa').val()+"&jenis="+$('#jenis').val();
+	}
+	function pindahData(id){
+		//alert(id);
+		window.location="index.php?x=korpi&id="+id;
+	}
+	function hapus(id){
+		$('#id2').val(id);
+		$('#aksi').val('hapus');
+		javascript: document.getElementById('formku').submit();
+		
+	}
+	
+	function tambah_all(){
+			$('#tambah_in').val('rame');
+			javascript: document.getElementById('form_index').submit();
+	}
+	function batal(){
+		window.location="index.php?x=hutang&bat=ok";
+	}
+	function hit1(){
+		tot=$("#tot").val();
+		tun=$("#tunai").val();
+		tra=$("#transfer").val();
+		bg=$("#pbg").val();
+		tam = parseFloat(tun) + parseFloat(tra) + parseFloat(bg);
+		if(tam > parseFloat(tot)){
+			$("#tunai").val('0');	
+		}	
+		
+				
+		/*if( parseFloat(tra)>0 && parseFloat(tun)>0){
+			sis = parseFloat(tun) + parseFloat(tra);
+			total = parseFloat(tot) - parseFloat(sis);
+			$("#pbg").val(total);	
+		}
+		if( parseFloat(bg)>0  && parseFloat(tun)>0){
+			sis = parseFloat(tun) + parseFloat(bg);
+			total = parseFloat(tot) - parseFloat(sis);
+			$("#transfer").val(total);	
+		}*/
+		
+		tampi()
+	}
+	function hit2(){
+		tot=$("#tot").val();
+		tun=$("#tunai").val();
+		tra=$("#transfer").val();
+		bg=$("#pbg").val();
+		tam = parseFloat(tun) + parseFloat(tra) + parseFloat(bg);
+		if(tam > parseFloat(tot)){
+			$("#transfer").val('0');	
+		}	
+		
+		
+		/*if( parseFloat(tun)>0  && parseFloat(tra)>0){
+			sis = parseFloat(tra) + parseFloat(tun);
+			total = parseFloat(tot) - parseFloat(sis);
+			$("#pbg").val(total);	
+		}
+		if( parseFloat(bg)>0  && parseFloat(tra)>0){
+			sis = parseFloat(tra) + parseFloat(bg);
+			total = parseFloat(tot) - parseFloat(sis);
+			$("#tunai").val(total);	
+		}*/
+		
+		tampi()
+	}
+	function hit3(){
+		tot=$("#tot").val();
+		tun=$("#tunai").val();
+		tra=$("#transfer").val();
+		bg=$("#pbg").val();
+		tam = parseFloat(tun) + parseFloat(tra) + parseFloat(bg);
+		if(tam > parseFloat(tot)){
+			$("#pbg").val('0');	
+		}	
+		
+		
+		/*if( parseFloat(tun)>0  && parseFloat(bg)>0){
+			sis = parseFloat(bg) + parseFloat(tun);
+			total = parseFloat(tot) - parseFloat(sis);
+			$("#transfer").val(total);	
+		}
+		if( parseFloat(tra)>0  && parseFloat(bg)>0){
+			sis = parseFloat(bg) + parseFloat(tra);
+			total = parseFloat(tot) - parseFloat(sis);
+			$("#tunai").val(total);	
+		}*/
+		
+		tampi()
+	}
+	
+	function tampi(){
+		if( parseFloat($("#pbg").val())>0 ){
+			$("#bg").show();
+		}else{
+			$("#bg").hide();
+		}
+		
+		if( parseFloat($("#transfer").val())>0 ){
+			$("#tra").show();
+		}else{
+			$("#tra").hide();
+		}
+		if( parseFloat($("#tunai").val())>0 ){
+			$("#tun").show();
+		}else{
+			$("#tun").hide();
+		}
+		
+		
+		
+		tot=$("#tot").val();
+		tun=$("#tunai").val();
+		tra=$("#transfer").val();
+		bg=$("#pbg").val();
+		tam = parseFloat(tun) + parseFloat(tra) + parseFloat(bg);
+		sis = parseFloat(tot) - parseFloat(tam);
+		$("#sisa").val( sis );
+		
+	}
+
+	function selisih(d){
+		alert($("#tes"+d).val());
+		stok=$("#tes").val();
+		fisik=$("#stokfisik").val();
+		selisih = stok-fisik;
+		$("#selisih").val(selisih);
+	}
+
+	function satuan(i,g){
+		//alert(g);
+		$("#stok_sys"+i).load("assets/inventory/stok_opname/mutasi.php?id="+i+"&gudang="+g);	
+	}
+	//$('.btn btn-default btn-icon kv-fileinput-upload').click(id);
+	$(".kv-fileinput-upload").click(function(){
+		alert('as');
+	}); 
+	function forma(){
+		$(".hargab").number( true , 0 );
+	}
+$(".hargab").number( true , 0 );
+	
+$('#cek_all').click(function(event) {   
+     if(this.checked) {
+      // Iterate each checkbox
+      $(':checkbox').each(function() {
+          this.checked = true;
+      });
+  }
+  else {
+    $(':checkbox').each(function() {
+          this.checked = false;
+      });
+  }
+});
+function cekPel(){
+		$.get('assets/inventory/buku_tagihan/fak.php', function(data) {
+				//alert(data);
+				$('#hahaha2').html(data);    
+		});
+	}
+	function hitung(no){
+		var a=$("#total_hutang"+no).val();	
+		var b=$("#dibayar"+no).val();
+		
+		if( b ==''){
+			$("#dibayar"+no).val('0')
+			$("#sisa"+no).val('0')
+		}else{
+			if(parseInt(b)>parseInt(a)){
+				$("#dibayar"+no).val('0')
+				$("#sisa"+no).val('0')
+			}else{
+				$("#sisa"+no).val( parseFloat(a) - parseFloat(b))
+			}
+		}
+			
+	}
+function hitungan(no){
+		var id = document.getElementById('no_faktur'+no);
+    	if(id.checked==true){
+			tot = $("#tot").val();
+			dibay = $("#dibayar"+no).val();
+			totpi = $("#total_hutang"+no).val();
+			jumr = $("#jumrow").val( )
+			
+			$("#dibayar"+no).val( totpi )
+			toti = parseFloat(totpi) + parseFloat(tot);
+			
+			//$("#tot").val( toti )
+			
+			jum = parseInt(jumr) + 1;
+			$("#jumrow").val( jum )
+			
+		}else{
+			tot = $("#tot").val();
+			dibay = $("#dibayar"+no).val();
+			totpi = $("#total_hutang"+no).val();
+			jumr = $("#jumrow").val( )
+			
+			$("#dibayar"+no).val( 0 )
+			toti = parseFloat(tot) - parseFloat(totpi);
+			
+			//$("#tot").val( toti )
+			
+			jum = parseInt(jumr) - 1;
+			$("#jumrow").val( jum )
+		}
+      
+}	
+	$("#tot").number( true , 0 );
+	$("#tunai").number( true , 0 );
+	$("#transfer").number( true , 0 );
+	$("#pbg").number( true , 0 );
+	
+	
+	function save(){
+		if (confirm("Data Akan disimpan, apakah anda yakin?")) {
+			
+			if ( $("#sisa").val() == 0){
+			
+            	javascript: document.getElementById('formku2').submit();
+			}else{
+				alert('Data tidak bisa disimpan, total pelunasan tidak sesuai!!')	
+			}
+			
+			
+        }
+        return false;
+		
+	}
+	
+</script>
