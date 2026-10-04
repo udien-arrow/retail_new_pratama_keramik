@@ -1,6 +1,6 @@
 <?php
 $host="$_SERVER[HTTP_HOST]";
-$hs="../" . basename(__DIR__); 
+$hs="index.php"; 
 
 // $filename = 'koneksi.txt';
 // $setting = file(__DIR__.'/'.$filename);

@@ -66,7 +66,7 @@ if($username=='admin'){
 			$_SESSION ['ANDROID'] = $check;
 			//$_SESSION ['ID_DIV'] = $value['id_divisi'];
 			$_SESSION ['NAMA_PEG'] = $value['nama_pegawai'];
-        	echo "<script>location.href='$hsi';</script>";	
+        	echo "<script>location.href='$hs';</script>";	
 	   }	
 	} 
 	else {

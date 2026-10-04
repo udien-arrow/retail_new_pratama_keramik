@@ -1,8 +1,6 @@
 <?php
 session_start();
-//$hs="../../tgis-upg.cloudmnm.com";
-//$hs="../../tgis";
-$hs="../" . basename(__DIR__);
+$hs="index.php";
 session_destroy();
 
 echo "<script>location.href='$hs';</script>";
