@@ -37,6 +37,9 @@
 					<div class="panel-heading">
 						<h5 class="panel-title">View Detil  Penjualan
 
+                        <?php if(!empty($_GET['id'])){ ?>
+                        <button style="float:right; margin-left: 5px;" class="btn btn-primary" type="button" onclick="window.open('cetak.php?page=closing&id=<?=$_GET['id']?>', '_blank')"><i class="icon-file-pdf position-left"></i> Cetak PDF</button>
+                        <?php } ?>
                         <button style="float:right" class="btn btn-danger" type="submit" name="simpan">Cetak</button>
          				<input type="hidden" name="id" id="id" value="<?=$_GET['id']?>" required>  
                         </h5>

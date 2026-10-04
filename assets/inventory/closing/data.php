@@ -28,9 +28,9 @@ $columns = array(
 		'formatter' => function( $d, $row ) {
 			return "
 			<ul class='icons-list'>
-			<li class='text-primary-200'><a href='javascript:void(0)' onClick=window.location='index.php?x=closing&id=$d' class=' icon-folder-open' style='cursor:pointer'></a></li>
+			<li class='text-primary-200'><a href='javascript:void(0)' onClick=\"window.location='index.php?x=closing&id=$d'\" class='icon-folder-open' style='cursor:pointer' title='Lihat Detil'></a></li>
+			<li class='text-primary-200'><a href='javascript:void(0)' onClick=\"window.open('cetak.php?page=closing&id=$d', '_blank')\" class='icon-printer2' style='cursor:pointer' title='Cetak PDF'></a></li>
 			</ul>
-			
 			";
 		}
 	)

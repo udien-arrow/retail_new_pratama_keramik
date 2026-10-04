@@ -219,6 +219,9 @@
 		if($_GET['page']=="lappoin"){
         include('assets/laporan/lappoin/report.php');
 		}
+		if($_GET['page']=="closing"){
+        include('assets/inventory/closing/report.php');
+		}
 
 		$content = ob_get_clean();
         require_once('assets/plugin/html2pdf/html2pdf.class.php');
